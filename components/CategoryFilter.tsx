@@ -1,5 +1,6 @@
 'use client'
 
+import { Suspense } from 'react'
 import Link from 'next/link'
 import { usePathname, useSearchParams } from 'next/navigation'
 import { getCategoryColor, getCategoryIcon } from '@/lib/utils'
@@ -14,7 +15,7 @@ const categories = [
   { key: 'other', value: 'Other' },
 ]
 
-export default function CategoryFilter() {
+function CategoryFilterContent() {
   const pathname = usePathname()
   const searchParams = useSearchParams()
   const currentCategory = searchParams.get('category') || 'all'
@@ -46,5 +47,25 @@ export default function CategoryFilter() {
         )
       })}
     </div>
+  )
+}
+
+export default function CategoryFilter() {
+  return (
+    <Suspense fallback={
+      <div className="flex flex-wrap gap-2">
+        {categories.map((category) => (
+          <div
+            key={category.key}
+            className="inline-flex items-center gap-1 px-4 py-2 rounded-full text-sm font-medium bg-gray-100 text-gray-700"
+          >
+            <span>{getCategoryIcon(category.key)}</span>
+            {category.value}
+          </div>
+        ))}
+      </div>
+    }>
+      <CategoryFilterContent />
+    </Suspense>
   )
 }
