@@ -27,7 +27,7 @@ export function getCategoryColor(category: string): string {
     family: 'bg-green-100 text-green-800',
     other: 'bg-gray-100 text-gray-800',
   };
-  return colors[category] || colors.other;
+  return (colors[category] || colors.other) as string;
 }
 
 export function getCategoryIcon(category: string): string {
@@ -39,5 +39,5 @@ export function getCategoryIcon(category: string): string {
     family: '👨‍👩‍👧‍👦',
     other: '📅',
   };
-  return icons[category] || icons.other;
+  return (icons[category] || icons.other) as string;
 }
